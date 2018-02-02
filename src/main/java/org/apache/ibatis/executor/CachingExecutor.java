@@ -38,7 +38,7 @@ import org.apache.ibatis.transaction.Transaction;
 public class CachingExecutor implements Executor {
 
   private Executor delegate;
-  private TransactionalCacheManager tcm = new TransactionalCacheManager();
+  private TransactionalCacheManager tcm = new TransactionalCacheManager();//二级缓存
 
   public CachingExecutor(Executor delegate) {
     this.delegate = delegate;
@@ -74,7 +74,7 @@ public class CachingExecutor implements Executor {
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
     //boundSql:封装了sql语句，查询参数，类型映射信息等。
     BoundSql boundSql = ms.getBoundSql(parameterObject);
-    //为当前查询创建一个缓存key
+    //为当前查询创建一个缓存key。这里是二级缓存，mapper级别（跟namespace有关），不同的sqlSession共享这一个缓存。依然存在脏数据问题。
     CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
     return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
   }

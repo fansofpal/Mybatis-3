@@ -28,7 +28,7 @@ public class TransactionalCache implements Cache {
 
   private Cache delegate;
   private boolean clearOnCommit;
-  private Map<Object, AddEntry> entriesToAddOnCommit;
+  private Map<Object, AddEntry> entriesToAddOnCommit;//待提交的缓存map，不执行commit，不会对二级缓存造成影响
   private Map<Object, RemoveEntry> entriesToRemoveOnCommit;
 
   public TransactionalCache(Cache delegate) {

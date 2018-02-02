@@ -53,7 +53,7 @@ public abstract class BaseExecutor implements Executor {
   protected Executor wrapper;
 
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
-  protected PerpetualCache localCache;
+  protected PerpetualCache localCache;//一级缓存，只存在于同一个sqlSession中。可能出现脏数据。
   protected PerpetualCache localOutputParameterCache;
   protected Configuration configuration;
 
